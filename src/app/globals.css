@@ -1,49 +1,450 @@
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@import "tailwindcss";
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* =========================================================================
+   Areesh Ali — portfolio design system (Tailwind v4 + warm token system)
+   Soft editorial engineering journal: warm paper, warm ink, one clay accent.
+   Raw tokens live in :root and flip with the theme; @theme inline maps them
+   into Tailwind so utilities (bg-paper, text-ink, font-display) stay themeable.
+   ========================================================================= */
+
+/* ---- Dark variant: system dark (unless forced light) + explicit toggle --- */
+@custom-variant dark {
+  &:where([data-theme="dark"], [data-theme="dark"] *) {
+    @slot;
+  }
+  @media (prefers-color-scheme: dark) {
+    &:where(:root:not([data-theme="light"]), :root:not([data-theme="light"]) *) {
+      @slot;
+    }
   }
 }
 
-html {
-  height: 100%;
+/* ---- Raw tokens: light (warm paper) ------------------------------------ */
+:root {
+  color-scheme: light;
+
+  --paper: #f4efe3;
+  --paper-raised: #ece5d5;
+  --paper-sunken: #e6ded0;
+  --paper-veil: rgba(35, 32, 27, 0.045);
+
+  --ink: #23201b;
+  --ink-80: #3b372f;
+  --ink-70: #4c473d;
+  --ink-50: #6f695b;
+  --ink-40: #857e6d;
+  --ink-30: #a49c88;
+
+  --line: #d9d0bc;
+  --line-soft: #e2dac8;
+  --line-strong: #c7bda4;
+
+  --clay: #b1573a;
+  --clay-soft: #c37a5e;
+  --clay-ghost: rgba(177, 87, 58, 0.1);
+  --sage: #4e6a5b;
+  --slate: #42576a;
+
+  --accent: var(--clay);
+  --accent-ghost: var(--clay-ghost);
+  --select-bg: rgba(177, 87, 58, 0.16);
+  --focus: var(--clay);
+
+  /* Fonts — the three concrete faces come from next/font in layout.tsx */
+  --ff-display: var(--font-fraunces), Georgia, "Times New Roman", serif;
+  --ff-sans: var(--font-hanken), system-ui, -apple-system, "Segoe UI", sans-serif;
+  --ff-mono: var(--font-jetbrains), ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  /* Fluid type scale */
+  --fs-2xs: 0.6875rem;
+  --fs-xs: 0.78rem;
+  --fs-sm: 0.9rem;
+  --fs-base: clamp(1.05rem, 1rem + 0.28vw, 1.2rem);
+  --fs-lg: clamp(1.2rem, 1.08rem + 0.5vw, 1.45rem);
+  --fs-display-s: clamp(1.4rem, 1.2rem + 0.9vw, 1.95rem);
+  --fs-display-m: clamp(1.75rem, 1.4rem + 1.7vw, 2.85rem);
+  --fs-display-l: clamp(2.3rem, 1.7rem + 3vw, 4.2rem);
+  --fs-display-xl: clamp(2.9rem, 1.7rem + 5.4vw, 6.6rem);
+
+  --leading-tight: 1.04;
+  --leading-snug: 1.18;
+  --leading-body: 1.62;
+
+  /* Spacing rhythm (raw, for hand-written CSS) */
+  --sp-1: 0.25rem;
+  --sp-2: 0.5rem;
+  --sp-3: 0.75rem;
+  --sp-4: 1rem;
+  --sp-5: 1.5rem;
+  --sp-6: 2rem;
+  --sp-7: 3rem;
+  --sp-8: 4rem;
+  --sp-9: 6rem;
+  --sp-10: 8rem;
+  --sp-11: 11rem;
+
+  /* Layout */
+  --gutter: clamp(1.25rem, 5vw, 4rem);
+  --container: 75rem;
+  --container-text: 42rem;
+  --measure: 66ch;
+
+  /* Radii */
+  --r-sm: 3px;
+  --r: 7px;
+  --r-lg: 16px;
+
+  /* Motion */
+  --motion-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --motion-ease-soft: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-1: 180ms;
+  --dur-2: 320ms;
+  --dur-3: 560ms;
 }
 
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
-
-body {
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
+/* ---- Raw tokens: dark (warm dark) -------------------------------------- */
 @media (prefers-color-scheme: dark) {
-  html {
+  :root:not([data-theme="light"]) {
     color-scheme: dark;
+    --paper: #1a1712;
+    --paper-raised: #221e18;
+    --paper-sunken: #131009;
+    --paper-veil: rgba(237, 230, 214, 0.045);
+
+    --ink: #ece5d5;
+    --ink-80: #d4ccba;
+    --ink-70: #c1b9a5;
+    --ink-50: #948c79;
+    --ink-40: #7c7563;
+    --ink-30: #5d5747;
+
+    --line: #322d24;
+    --line-soft: #29241c;
+    --line-strong: #423c30;
+
+    --clay: #d0805f;
+    --clay-soft: #dc9576;
+    --clay-ghost: rgba(208, 128, 95, 0.14);
+    --sage: #83a291;
+    --slate: #85a0b8;
+
+    --accent: var(--clay);
+    --accent-ghost: var(--clay-ghost);
+    --select-bg: rgba(208, 128, 95, 0.22);
+    --focus: var(--clay);
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --paper: #1a1712;
+  --paper-raised: #221e18;
+  --paper-sunken: #131009;
+  --paper-veil: rgba(237, 230, 214, 0.045);
+
+  --ink: #ece5d5;
+  --ink-80: #d4ccba;
+  --ink-70: #c1b9a5;
+  --ink-50: #948c79;
+  --ink-40: #7c7563;
+  --ink-30: #5d5747;
+
+  --line: #322d24;
+  --line-soft: #29241c;
+  --line-strong: #423c30;
+
+  --clay: #d0805f;
+  --clay-soft: #dc9576;
+  --clay-ghost: rgba(208, 128, 95, 0.14);
+  --sage: #83a291;
+  --slate: #85a0b8;
+
+  --accent: var(--clay);
+  --accent-ghost: var(--clay-ghost);
+  --select-bg: rgba(208, 128, 95, 0.22);
+  --focus: var(--clay);
+}
+
+/* ---- Map raw tokens into Tailwind's theme ------------------------------ */
+@theme inline {
+  --color-paper: var(--paper);
+  --color-paper-raised: var(--paper-raised);
+  --color-paper-sunken: var(--paper-sunken);
+  --color-ink: var(--ink);
+  --color-ink-80: var(--ink-80);
+  --color-ink-70: var(--ink-70);
+  --color-ink-50: var(--ink-50);
+  --color-ink-40: var(--ink-40);
+  --color-ink-30: var(--ink-30);
+  --color-line: var(--line);
+  --color-line-soft: var(--line-soft);
+  --color-line-strong: var(--line-strong);
+  --color-clay: var(--clay);
+  --color-clay-soft: var(--clay-soft);
+  --color-sage: var(--sage);
+  --color-slate: var(--slate);
+  --color-accent: var(--accent);
+  --color-accent-ghost: var(--accent-ghost);
+
+  --font-display: var(--ff-display);
+  --font-sans: var(--ff-sans);
+  --font-mono: var(--ff-mono);
+
+  --text-2xs: var(--fs-2xs);
+  --text-xs: var(--fs-xs);
+  --text-sm: var(--fs-sm);
+  --text-base: var(--fs-base);
+  --text-lg: var(--fs-lg);
+  --text-display-s: var(--fs-display-s);
+  --text-display-m: var(--fs-display-m);
+  --text-display-l: var(--fs-display-l);
+  --text-display-xl: var(--fs-display-xl);
+
+  --leading-tight: var(--leading-tight);
+  --leading-snug: var(--leading-snug);
+  --leading-body: var(--leading-body);
+
+  --radius-sm: var(--r-sm);
+  --radius: var(--r);
+  --radius-lg: var(--r-lg);
+
+  --ease-soft: var(--motion-ease-soft);
+  --ease-warm: var(--motion-ease);
+
+  --max-width-measure: var(--measure);
+  --max-width-container: var(--container);
+  --max-width-container-text: var(--container-text);
+}
+
+/* ---- Base layer -------------------------------------------------------- */
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--paper);
+    color: var(--ink);
+    font-family: var(--ff-sans);
+    font-size: var(--fs-base);
+    line-height: var(--leading-body);
+    font-feature-settings: "kern", "liga", "calt";
+    min-height: 100dvh;
+    overflow-x: hidden;
+  }
+
+  /* Faint warm paper grain — reads as material, not decoration */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.6;
+    background-image: radial-gradient(var(--paper-veil) 1px, transparent 1px);
+    background-size: 4px 4px;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--ff-display);
+    font-weight: 400;
+    line-height: var(--leading-tight);
+    letter-spacing: -0.012em;
+    font-variation-settings: "opsz" 60, "SOFT" 40, "WONK" 0;
+    color: var(--ink);
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  img,
+  svg {
+    display: block;
+    max-width: 100%;
+  }
+
+  ul,
+  ol {
+    list-style: none;
+  }
+
+  ::selection {
+    background: var(--select-bg);
+    color: var(--ink);
+  }
+
+  :focus {
+    outline: none;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  @supports selector(::-webkit-scrollbar) {
+    * {
+      scrollbar-width: thin;
+      scrollbar-color: var(--line-strong) transparent;
+    }
+    ::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--line-strong);
+      border: 3px solid var(--paper);
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+  }
+}
+
+/* ---- Editorial component classes --------------------------------------- */
+@layer components {
+  .eyebrow {
+    font-family: var(--ff-mono);
+    font-size: var(--fs-2xs);
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-50);
+  }
+
+  .eyebrow-accent {
+    color: var(--accent);
+  }
+
+  /* Link with a custom offset underline that grows on hover */
+  .link {
+    color: var(--ink);
+    background-image: linear-gradient(var(--accent), var(--accent));
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    background-size: 0% 1.5px;
+    transition: background-size var(--dur-2) var(--motion-ease),
+      color var(--dur-1) var(--motion-ease);
+    padding-bottom: 1px;
+  }
+
+  .link:hover {
+    color: var(--accent);
+    background-size: 100% 1.5px;
+  }
+
+  .skip-link {
+    position: fixed;
+    top: -100px;
+    left: var(--gutter);
+    z-index: 100;
+    padding: 0.6rem 1rem;
+    background: var(--ink);
+    color: var(--paper);
+    font-family: var(--ff-mono);
+    font-size: var(--fs-xs);
+    border-radius: var(--r);
+    transition: top var(--dur-2) var(--motion-ease);
+  }
+
+  .skip-link:focus {
+    top: var(--gutter);
+  }
+
+  /* Prose for case-study body and about text */
+  .prose {
+    max-width: var(--measure);
+  }
+  .prose > * + * {
+    margin-top: 1.1em;
+  }
+  .prose p {
+    color: var(--ink-80);
+  }
+  .prose a {
+    color: var(--ink);
+    border-bottom: 1.5px solid var(--accent);
+    padding-bottom: 1px;
+    transition: color var(--dur-1) var(--motion-ease),
+      background var(--dur-1) var(--motion-ease);
+  }
+  .prose a:hover {
+    color: var(--accent);
+    background: var(--accent-ghost);
+  }
+}
+
+/* ---- Reveal / motion --------------------------------------------------- */
+@layer utilities {
+  .u-container {
+    width: 100%;
+    max-width: var(--container);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+  .u-container-text {
+    width: 100%;
+    max-width: var(--container-text);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity var(--dur-3) var(--motion-ease-soft),
+      transform var(--dur-3) var(--motion-ease-soft);
+    transition-delay: var(--reveal-delay, 0ms);
+    will-change: opacity, transform;
+  }
+  [data-reveal="shown"] {
+    opacity: 1;
+    transform: none;
+  }
+
+  .wi-fade {
+    animation: wi-fade var(--dur-3) var(--motion-ease-soft);
+  }
+  @keyframes wi-fade {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
   }
 }
