@@ -12,7 +12,7 @@ export const site = {
   timezone: "UTC+5",
   availability: "Open to remote roles and select freelance",
   email: "areesh.ali.abd@gmail.com",
-  url: "https://areeshali.dev",
+  url: "https://areesh-portfolio.netlify.app",
   description:
     "Software engineer working at the intersection of AI, infrastructure, and cloud. I own systems end to end — Terraform and AWS underneath, backend services in the middle, and LLM or vision models on top.",
   socials: [
